@@ -1,5 +1,6 @@
 package cholog;
 
+import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -135,19 +136,23 @@ public class FunctionalProgrammingTest {
 
             // TODO: 아래 코드를 Comparator를 구현하는 익명 클래스로 변경하여 User의 나이를 기준으로 정렬하세요. 람다로도 구현해보세요.
             final var users = new ArrayList<User>(List.of(brown, neo, brie));
-            for (int i = 0, end = users.size(); i < end; i++) {
-                for (int j = i + 1; j < end; j++) {
-                    if (users.get(i).age() > users.get(j).age()) {
-                        final var temp = users.get(i);
-                        users.set(i, users.get(j));
-                        users.set(j, temp);
-                    }
-                }
-            }
 
-            for (final var user : users) {
-                System.out.println(user.name() + ": " + user.age());
-            }
+//            1. 익명 클래스
+//            Collections.sort(users, new Comparator<User>() {
+//                @Override
+//                public int compare(User o1, User o2) {
+//                    return o1.age-o2.age;
+//                }
+//            });
+
+//            2. 람다
+//            Collections.sort(users, ((o1, o2) -> o1.age-o2.age));
+
+//            3. 메서드참조
+//            users.sort(Comparator.comparing(User::age));
+
+//            4. 기본형특화
+            users.sort(Comparator.comparingInt(User::age));
 
             assertAll(
                     () -> assertThat(users).last().isSameAs(neo),
