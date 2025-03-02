@@ -1,5 +1,6 @@
 package cholog;
 
+import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -410,13 +411,10 @@ public class FunctionalProgrammingTest {
             final var contents = Files.readString(Paths.get("src/test/resources/war-and-peace.txt"));
 
             // TODO: 아래 코드를 Stream API를 활용하여 구현하세요.
-            final var words = contents.split("\\P{L}+");
-            var count = 0;
-            for (final var word : words) {
-                if (word.length() > 12) {
-                    count++;
-                }
-            }
+
+            var count = Arrays.stream(contents.split("\\P{L}+"))
+                    .filter(word -> word.length() > 12)
+                    .count();
 
             // -----------------------------------------------------------------
 
