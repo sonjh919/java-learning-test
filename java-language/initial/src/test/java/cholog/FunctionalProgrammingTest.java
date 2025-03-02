@@ -464,20 +464,26 @@ public class FunctionalProgrammingTest {
             final var expected = 18;
 
             // TODO: 아래 코드를 Stream API를 활용하여 구현하세요.
-            var result = 0;
-            for (final Integer number : numbers) {
-                if (2 >= number) {
-                    continue;
-                }
-                if (number > 5) {
-                    continue;
-                }
-                if (number * 2 < 7) {
-                    continue;
-                }
+//            var result = 0;
+//            for (final Integer number : numbers) {
+//                if (2 >= number) {
+//                    continue;
+//                }
+//                if (number > 5) {
+//                    continue;
+//                }
+//                if (number * 2 < 7) {
+//                    continue;
+//                }
+//
+//                result += number * 2;
+//            }
 
-                result += number * 2;
-            }
+            var result = numbers.stream()
+                    .filter(number -> 2 < number)
+                    .filter(number -> number <= 5)
+                    .filter(number -> number * 2 >= 7)
+                    .reduce(0, (a, b) -> a + b * 2);
 
             // -----------------------------------------------------------------
 
