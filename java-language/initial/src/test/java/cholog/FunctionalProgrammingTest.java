@@ -2,6 +2,7 @@ package cholog;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -431,16 +432,20 @@ public class FunctionalProgrammingTest {
             final var numbers = List.of(1, 2, 3, 4, 5);
 
             // TODO: 아래 코드를 Stream API를 활용하여 구현하세요.
-            final var stringBuilder = new StringBuilder();
-            for (int i = 0, end = numbers.size(); i < end; i++) {
-                stringBuilder.append(numbers.get(i));
+//            final var stringBuilder = new StringBuilder();
+//            for (int i = 0, end = numbers.size(); i < end; i++) {
+//                stringBuilder.append(numbers.get(i));
+//
+//                if (i != end - 1) {
+//                    stringBuilder.append(":");
+//                }
+//            }
+//
+//            final var result = stringBuilder.toString();
 
-                if (i != end - 1) {
-                    stringBuilder.append(":");
-                }
-            }
-
-            final var result = stringBuilder.toString();
+            var result = numbers.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(":"));
 
             // -----------------------------------------------------------------
 
