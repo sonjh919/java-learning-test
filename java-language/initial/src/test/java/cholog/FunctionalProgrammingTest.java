@@ -192,7 +192,7 @@ public class FunctionalProgrammingTest {
         @Test
         @DisplayName("Consumer")
         void Consumer() {
-            final Consumer<String> consumer = value -> System.out.println(value);
+            final Consumer<String> consumer = System.out::println;
             consumer.accept("Consumer");
         }
 
@@ -286,7 +286,7 @@ public class FunctionalProgrammingTest {
     }
 
     /**
-     * Stream은 자바의 컬렉션을 함수형 프로그래밍으로 다루기 위한 라이브러리입니다.
+     * Stream은 자바의 컬렉션을 함수형 프로그래밍으로 다루기 위한 라이브러리입니다.Q
      * Stream API는 크게 생성, 가공, 소비의 세 가지 단계로 이루어져 있습니다.
      * <p>
      * 생성: 컬렉션을 스트림으로 변환합니다. 생성 단계에서 컬렉션을 스트림으로 변환하고, 가공 단계에서 스트림을 가공합니다.
@@ -388,27 +388,12 @@ public class FunctionalProgrammingTest {
                     new Crew("조부용", "brie", 12)
             );
 
-            // TODO: 아래 코드를 선언형으로 변경하세요.
-            final var filteredCrews = new ArrayList<Crew>();
-            for (final var crew : crews) {
-                if (crew.name().startsWith("김") &&
-                        crew.age() >= 25 &&
-                        crew.age() < 30 &&
-                        crew.nickname().length() == 2) {
-                    filteredCrews.add(crew);
-                }
-            }
-
-            var maxAge = 0;
-            Crew maxAgeCrew = null;
-            for (final var crew : filteredCrews) {
-                if (crew.age() > maxAge) {
-                    maxAge = crew.age();
-                    maxAgeCrew = crew;
-                }
-            }
-
-            System.out.println(maxAgeCrew.name() + ": " + maxAgeCrew.nickname() + ": " + maxAgeCrew.age());
+            Crew maxAgeCrew = crews.stream()
+                    .filter(crew -> crew.name().startsWith("김"))
+                    .filter(crew -> crew.age() >= 25 && crew.age < 30)
+                    .filter(crew -> crew.nickname().length() == 2)
+                    .max(Comparator.comparing(Crew::age))
+                    .orElse(null);
 
             // -----------------------------------------------------------------
 
