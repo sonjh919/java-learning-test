@@ -2,6 +2,7 @@ package cholog;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -545,8 +546,13 @@ public class FunctionalProgrammingTest {
             final var contents = Files.readString(Paths.get("src/test/resources/war-and-peace.txt"));
 
             // TODO: 가장 많이 등장하는 단어의 수를 찾으세요.
-            // final var words = contents.split("\\P{L}+");
-            final var result = 0L;
+            final var result = Arrays.stream(contents.split("\\P{L}+"))
+                    .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                    .entrySet()
+                    .stream()
+                    .max(Comparator.comparing(Entry::getValue))
+                    .map(Entry::getValue)
+                    .orElseThrow();
 
             // -----------------------------------------------------------------
             assertThat(result).isEqualTo(31_949L);
