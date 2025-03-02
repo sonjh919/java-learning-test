@@ -509,8 +509,17 @@ public class FunctionalProgrammingTest {
 
             // TODO: 위 조건에 맞는 10개의 단어를 추출하세요.
             // final var words = contents.split("\\P{L}+");
-            final var results = new ArrayList<String>();
+//            final var results = new ArrayList<String>();
 
+            var results = Arrays.stream(contents.split("\\P{L}+"))
+                    .filter(word -> word.length() > 12)
+                    .distinct()
+                    .sorted(Comparator.comparing(String::length))
+                    .limit(100)
+                    .filter(word -> word.indexOf(1) == word.toLowerCase().indexOf(1))
+                    .map(String::toLowerCase)
+                    .sorted()
+                    .limit(10);
             // -----------------------------------------------------------------
             assertThat(results).containsExactly(
                     "acknowledging",
